@@ -1,3 +1,5 @@
+// import { arrfood } from "./app";
+
 document.title = "Restaurant1";
 
 // get myData from my local storage
@@ -45,6 +47,163 @@ function getData() {
 }
 getData();
 
+/*
+
+
+*/
+
+let retrivedDataPie = localStorage.getItem("Foods");
+let parsedDataPie = JSON.parse(retrivedDataPie);
+
+const names = [];
+
+for (let i = 0; i < parsedDataPie.length; i++) {
+  names.push(parsedDataPie[i].foodType);
+}
+
+////////////////////////////////
+const arr = names;
+
+function foo(array) {
+  let a = [],
+    b = [],
+    arr = [...array], // clone array so we don't change the original when using .sort()
+    prev;
+
+  arr.sort();
+  for (let element of arr) {
+    if (element !== prev) {
+      a.push(element);
+      b.push(1);
+    } else ++b[b.length - 1];
+    prev = element;
+  }
+
+  return [a, b];
+}
+
+const result = foo(arr);
+console.log("[" + result[0] + "]", "[" + result[1] + "]");
+console.log(arr);
+////////////////////////////////
+console.log(names);
+
+const labels = [];
+
+const data = {
+  labels: names,
+  datasets: [
+    {
+      label: "Restaurant Chart",
+      backgroundColor: [
+        "rgb(255,140,0)",
+        "rgb(54, 162, 235)",
+        "rgb(255,215,0)",
+        "rgb(128,128,0)",
+        "rgb(0,255,0)",
+      ],
+      borderColor: "rgb(255,255,255)",
+      data: result[1],
+    },
+  ],
+};
+
+const config = {
+  type: "pie",
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "right",
+      },
+      title: {
+        display: true,
+        text: "Types of food",
+      },
+    },
+  },
+};
+
+// what i need to do is to get the data from getData to the new chart so i can print them
+const myChart = new Chart(document.getElementById("myChart"), config);
+
+//////////////////////
+// Bar chart
+
+var barColors = ["red", "green", "blue", "orange", "brown"];
+
+const prices = [],
+  foodNameBar = [];
+
+for (let i = 0; i < parsedDataPie.length; i++) {
+  prices.push(parsedDataPie[i].price);
+  foodNameBar.push(parsedDataPie[i].foodname);
+}
+console.log(prices);
+
+new Chart("myChartBar", {
+  type: "bar",
+  data: {
+    labels: foodNameBar,
+    datasets: [
+      {
+        backgroundColor: barColors,
+        data: prices,
+      },
+    ],
+  },
+  options: {
+    legend: { display: false },
+    title: {
+      display: true,
+      text: "World Wine Production 2018",
+    },
+  },
+});
+
+// what i need to do is to get the data from getData to the new chart so i can print them
+
+// const configBar = {
+//   type: "bar",
+//   data: data,
+//   options: {
+//     scales: {
+//       y: {
+//         beginAtZero: true,
+//       },
+//     },
+//   },
+// };
+// const labelsBar = Utils.months({ count: 7 });
+// const dataBar = {
+//   labelsBar: labelsBar,
+//   datasets: [
+//     {
+//       labelsBar: "My First Dataset",
+//       data: [65, 59, 80, 81, 56, 55, 40],
+//       backgroundColor: [
+//         "rgba(255, 99, 132, 0.2)",
+//         "rgba(255, 159, 64, 0.2)",
+//         "rgba(255, 205, 86, 0.2)",
+//         "rgba(75, 192, 192, 0.2)",
+//         "rgba(54, 162, 235, 0.2)",
+//         "rgba(153, 102, 255, 0.2)",
+//         "rgba(201, 203, 207, 0.2)",
+//       ],
+//       borderColor: [
+//         "rgb(255, 99, 132)",
+//         "rgb(255, 159, 64)",
+//         "rgb(255, 205, 86)",
+//         "rgb(75, 192, 192)",
+//         "rgb(54, 162, 235)",
+//         "rgb(153, 102, 255)",
+//         "rgb(201, 203, 207)",
+//       ],
+//       borderWidth: 1,
+//     },
+//   ],
+// };
 /*
 
 
